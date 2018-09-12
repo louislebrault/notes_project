@@ -9,11 +9,12 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('display saved notes', () => {
+it('display given notes', () => {
   const notes = ['note 1', 'note 2'];
 
   const div = document.createElement('div');
-  const test = ReactDOM.render(<App />, div);
+  const app = ReactDOM.render(<App notes={notes}/>, div);
 
-  ReactTestUtils.findRenderedDOMComponentWithClass(test, 'note')
-})
+  const result = ReactTestUtils.scryRenderedDOMComponentsWithClass(app, 'note');
+  expect(result.length).toBe(notes.length)
+});
