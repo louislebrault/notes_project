@@ -1,33 +1,28 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import NotesContainer from './notes/notesContainer.js';
 
 import ReactDOM from 'react-dom';
 
 class App extends Component {
+  notes = [];
+  
   constructor(props) {
     super(props);
 
+    this.notes = this.props.notes || [];
+  
     this.state = {
-      displayedNotes: [],
+      notesContainer: <NotesContainer notes={this.props.notes}></NotesContainer>,
       inputValue: ''
     }
-
-    this.getNotes();
-  }
-
-  getNotes() {
-    if (this.props.notes && this.props.notes.length > 0) {
-      this.state.displayedNotes = this.props.notes.map((note, index) => {
-        return (<li className='note' key={index}>{note}</li>);
-      });
-    }
-    return this.state.displayedNotes;
   }
 
   addNote(value) {
-    const note = (<li className='note' key={this.state.displayedNotes.length}>{value}</li>);
-    this.setState({displayedNotes: [...this.state.displayedNotes, note]});
+    const index = this.state.displayedNotes ? this.state.displayedNotes.length : 0;
+      this.notes.push(value);
+      this.setState({notesContainer: <NotesContainer notes={this.notes}></NotesContainer>});
   }
 
   onInputChange(e) {
@@ -56,9 +51,7 @@ class App extends Component {
           </button>
         </div>
 
-        <ul ref="noteList">
-          {this.state.displayedNotes}
-        </ul>
+        {this.state.notesContainer}
       </div>
     );
   }
