@@ -3,8 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import NotesContainer from './notes/notesContainer.js';
 
-import ReactDOM from 'react-dom';
-
 class App extends Component {
   notes = [];
   
@@ -20,13 +18,12 @@ class App extends Component {
   }
 
   addNote(value) {
-    const index = this.state.displayedNotes ? this.state.displayedNotes.length : 0;
-      this.notes.push(value);
-      this.setState({notesContainer: <NotesContainer notes={this.notes}></NotesContainer>});
+    this.notes.push(value);
+    this.setState({notesContainer: <NotesContainer notes={this.notes}></NotesContainer>});
   }
 
   onInputChange(e) {
-    this.state.inputValue = e.target.value;
+    this.setState({inputValue: e.target.value});
   }
 
   onButtonClick(e) {
