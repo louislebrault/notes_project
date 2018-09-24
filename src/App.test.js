@@ -44,11 +44,24 @@ it('add a note when clicking on button if input is not empty', () => {
   findRenderedDOMComponentWithClass(app, 'note');
 });
 
+it('can move the input under an existing note to add one as a child', () => {
+  const notes = ['note 1'];
+  app = ReactDOM.render(<App notes={notes}/>, container);
+  const note = findRenderedDOMComponentWithClass(app, 'note');
+  simulateUserInput('click', note);
+  simulateUserInput('keydown', note, "Enter");
+  // verifier qu'on a un input sous la note sur laqulle on a clické
+})
+
 function simulateUserInput(event, target, value) {
   if (event === 'click') {
     Simulate.click(target);
   } else if (event === 'change') {
     Simulate.change(target, { target: { value }});
+  } else if (event === 'keyDown') {
+    // Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
+    // est ce que ca marche sans keycode ?
+    Simulate.keyDown(target, {key: value});
   } else {
     throw new Error ('simulateUserInput :: unknown event :' + event);
   }
